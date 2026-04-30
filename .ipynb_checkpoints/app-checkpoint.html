@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenEdu - AI Learning Assistant</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/panzoom@9.4.0/dist/panzoom.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Cairo', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #fce4ec);
+      min-height: 100vh;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: linear-gradient(90deg, #1f3b5c, #2c5364);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      position: fixed;
+      width: 100%;
+      z-index: 1000;
+      top: 0;
+      padding: 5px 20px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-container {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      height: 60px;
+      cursor: pointer;
+      transition: transform 0.2s;
+      object-fit: contain;
+      margin-top: 9px;
+      display: block;
+    }
+
+    .logo:hover { transform: scale(1.03); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+        
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      padding: 8px 5px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.25s ease;
+      font-size: 12px;
+      font-weight: 600;
+      width: 120px;
+      margin-bottom: 9px;
+
+    }
+
+    .nav-btn:hover {
+      background: #4facfe;
+      transform: translateY(-1px);
+    }
+
+    .nav-btn.active {
+      background: #4facfe;
+      box-shadow: 0 0 10px rgba(79,172,254,0.5);
+      border: none;
+    }
+
+    /* Language dropdown */
+    .navbar-lang {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      padding: 4px 5px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      width: 90px;
+    }
+
+    .navbar-lang option {
+      color: black;
+      background: white;
+    }
+
+    /* ===== CONTENT ===== */
+    #content {
+      padding-top: 52px;
+      min-height: calc(100vh - 52px);
+    }
+
+    .hidden { display: none !important; }
+
+    /* HOME - Image background sur tout l'écran */
+    #home {
+      height: calc(100vh - 52px);
+      width: 100%;
+    }
+
+    .hero {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(135deg, rgba(31,59,92,0.82), rgba(44,83,100,0.82)), url('edu.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .hero-content h1 {
+      font-size: 80px;
+      color: white;
+       background: linear-gradient(to bottom, #ffffff 60%, #d1e9ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(4px 4px 15px rgba(0, 0, 0, 0.3));
+       text-shadow:
+          1px 1px 2px white,
+          0 0 1em blue,
+          0 0 0.2em white;
+    }
+
+    .hero-content p {
+      font-size: 15px;
+      color: #eee;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .hero-content button {
+      width: auto;
+      padding: 12px 20px;
+      margin-top: 15px;
+        border-radius: 10px;
+    }
+
+    /* Autres sections */
+    .container {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title-main {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1f3b5c, #4facfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.96);
+      padding: 25px;
+      border-radius: 24px;
+      border: 1px solid rgba(79,172,254,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #1f3b5c;
+      font-size: 14px;
+    }
+
+    input[type="text"], input[type="file"], select {
+      width: 100%;
+      padding: 11px 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      font-size: 14px;
+      font-family: inherit;
+      background: white;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #4facfe;
+      box-shadow: 0 0 0 3px rgba(79,172,254,0.1);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 11px 22px;
+      width: 100%;
+      background: linear-gradient(135deg, #4facfe, #00c6ff);
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 40px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(79,172,254,0.3);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 33%;
+      background: #ef5350;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .quiz-question {
+      margin-bottom: 22px;
+      padding: 18px;
+      background: #f8fafc;
+      border-radius: 18px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .choice {
+      display: block;
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      transition: all 0.12s;
+      font-size: 14px;
+    }
+
+    .choice:hover { background: #e3f2fd; }
+    .correct { background: #c8e6c9 !important; border-color: #81c784 !important; }
+    .wrong { background: #ffcdd2 !important; border-color: #e57373 !important; }
+
+    .result-box {
+      text-align: center;
+      padding: 25px;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 22px;
+      margin-bottom: 22px;
+    }
+
+    .answer-box {
+      background: #f1f5f9;
+      padding: 22px;
+      border-radius: 18px;
+      line-height: 1.85;
+      font-size: 15px;
+      border-left: 5px solid #4facfe;
+    }
+
+    .answer-box strong {
+      color: #1f3b5c;
+    }
+
+    .level-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .level-beginner { background: #4caf50; color: white; }
+    .level-intermediate { background: #ff9800; color: white; }
+    .level-advanced { background: #f44336; color: white; }
+
+    .pdf-summary {
+      background: #f1f5f9;
+      padding: 22px;
+      border-radius: 18px;
+      line-height: 1.85;
+      margin-bottom: 25px;
+    }
+
+    .pdf-summary strong {
+      color: #1f3b5c;
+      font-size: 15px;
+    }
+
+    .diagram-card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .diagram-body {
+      background: #f9fbff;
+      padding: 20px;
+      border-radius: 16px;
+      overflow-x: auto;
+    }
+
+    .diagram-explanation {
+      margin-top: 18px;
+      background: #f0f4ff;
+      padding: 18px;
+      border-radius: 14px;
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .download-btn-container {
+      text-align: right;
+      margin-top: 18px;
+    }
+
+    .download-btn {
+      width: auto;
+      padding: 8px 22px;
+      background: linear-gradient(135deg, #2c5364, #1f3b5c);
+      margin-top: 0;
+      font-size: 13px;
+    }
+
+    .loader {
+      border: 3px solid #eee;
+      border-top: 3px solid #4facfe;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      margin: auto;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .alert-red {
+      background: #ffebee;
+      padding: 15px;
+      border-radius: 14px;
+      color: #c62828;
+      font-weight: 600;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 750px) {
+      .navbar { padding: 0 15px; }
+      .nav-btn { padding: 5px 12px; font-size: 11px; }
+      .navbar-lang { width: 85px; padding: 5px 8px; font-size: 10px; }
+      .hero-content h1 { font-size: 42px; }
+      .nav-right { gap: 8px; }
+      .nav-buttons { gap: 6px; }
+    }
+  </style>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "default",
+      themeVariables: {
+        primaryColor: "#4facfe",
+        primaryTextColor: "#ffffff",
+        primaryBorderColor: "#4facfe",
+        lineColor: "#333",
+        secondaryColor: "#00c6ff"
+      }
+    });
+  </script>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="nav-container">
+      <img src="genedu_logo.png" alt="GenEdu" class="logo" onclick="showPage('home', null, true)" />
+      <div class="nav-right">
+        <div class="nav-buttons">
+          <button class="nav-btn active" onclick="showPage('home', this)">🏠 Home</button>
+          <button class="nav-btn" onclick="showPage('quiz', this)">🧠 Smart Quiz</button>
+          <button class="nav-btn" onclick="showPage('pdf', this)">📄 PDF Analyzer</button>
+          <button class="nav-btn" onclick="showPage('diagram', this)">📊 AI Diagram</button>
+        </div>
+        <select id="globalLang" class="navbar-lang" onchange="onGlobalLanguageChange()">
+          <option value="en">🌐 English</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="ar">🇹🇳 العربية</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <div id="home">
+      <div class="hero">
+        <div class="hero-content">
+          <h1>GenEdu</h1>
+          <p>An intelligent AI-powered platform designed for students and teachers.<br>
+            Generate quizzes, analyze courses, and visualize knowledge through smart diagrams.</p>
+          <button onclick="showPage('quiz', document.querySelectorAll('.nav-btn')[1])">🚀 Get Started</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz" class="hidden">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-title-main">🧠 Smart Quiz</div>
+          <div class="section-subtitle">Generate structured explanations or quizzes</div>
+        </div>
+        <div class="card">
+          <div class="form-group">
+            <label>💬 Your Question</label>
+            <input id="quiz-question" type="text" placeholder="e.g. What is machine learning?" />
+          </div>
+          <div class="form-group">
+            <label>📊 Difficulty Level</label>
+            <select id="quiz-level">
+              <option value="">🤖 Auto</option>
+              <option value="beginner">🟢 Beginner</option>
+              <option value="intermediate">🟡 Intermediate</option>
+              <option value="advanced">🔴 Advanced</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>🎯 Goal</label>
+            <select id="quiz-goal">
+              <option value="answer">💡 Explanation</option>
+              <option value="quiz">📝 Quiz</option>
+            </select>
+          </div>
+          <button onclick="askQuiz()">🚀 Generate</button>
+        </div>
+        <div id="output"></div>
+        <div class="card">
+          <div class="section-header" style="margin-bottom: 12px;">
+            <div class="section-title-main" style="font-size: 22px;">📈 Your Progress</div>
+          </div>
+          <div id="level-text" style="font-weight:700; text-align:center; margin-bottom: 10px;">Level: BEGINNER</div>
+          <div class="progress-bar"><div id="progress-fill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pdf" class="hidden">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-title-main">📄 PDF Analyzer</div>
+          <div class="section-subtitle">Upload your course and get AI summary + quiz</div>
+        </div>
+        <div class="card">
+          <div class="form-group">
+            <label>📁 Upload PDF</label>
+            <input type="file" id="pdfFile" accept="application/pdf" />
+          </div>
+          <button onclick="uploadPDF()">📤 Upload & Analyze</button>
+        </div>
+        <div id="pdf-output"></div>
+      </div>
+    </div>
+
+    <div id="diagram" class="hidden">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-title-main">📊 AI Diagram</div>
+          <div class="section-subtitle">Generate flowcharts, sequence diagrams & architecture</div>
+        </div>
+        <div class="card">
+          <div class="form-group">
+            <label>📐 Topic</label>
+            <input id="diagram-question" type="text" placeholder="e.g. Machine learning workflow" />
+          </div>
+          <div class="form-group">
+            <label>🎨 Diagram Type</label>
+            <select id="diagramType">
+              <option value="auto">🤖 Auto</option>
+              <option value="flowchart">Flowchart</option>
+              <option value="sequence">Sequence</option>
+              <option value="architecture">Architecture</option>
+            </select>
+          </div>
+          <button onclick="generateDiagram()">📊 Generate Diagram</button>
+        </div>
+        <div id="diagram-output"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentQuizData = null;
+    let currentPDFData = null;
+    let currentDiagramData = null;
+    let currentQuizLevel = null;
+
+    function getLevelBadge(level) {
+      if (level === 'beginner') return '<span class="level-badge level-beginner">📘 BEGINNER</span>';
+      if (level === 'intermediate') return '<span class="level-badge level-intermediate">📙 INTERMEDIATE</span>';
+      if (level === 'advanced') return '<span class="level-badge level-advanced">📕 ADVANCED</span>';
+      return '';
+    }
+
+    function formatAnswer(text, level) {
+      let formatted = text;
+      if (!text.includes('Definition:') && !text.includes('**Definition**')) {
+        return `<div>${getLevelBadge(level)}</div><div class="answer-box">${text.replace(/\n/g, '<br>')}</div>`;
+      }
+      formatted = formatted.replace(/Definition:/gi, '<br><strong>📖 Definition:</strong><br>')
+                         .replace(/\*\*Definition\*\*/gi, '<br><strong>📖 Definition:</strong><br>')
+                         .replace(/Explanation:/gi, '<br><strong>🔍 Explanation:</strong><br>')
+                         .replace(/\*\*Explanation\*\*/gi, '<br><strong>🔍 Explanation:</strong><br>')
+                         .replace(/Example:/gi, '<br><strong>💡 Example:</strong><br>')
+                         .replace(/\*\*Example\*\*/gi, '<br><strong>💡 Example:</strong><br>')
+                         .replace(/Question:/gi, '<br><strong>❓ Question:</strong><br>')
+                         .replace(/\*\*Question\*\*/gi, '<br><strong>❓ Question:</strong><br>');
+      return `<div>${getLevelBadge(level)}</div><div class="answer-box">${formatted.replace(/\n/g, '<br>')}</div>`;
+    }
+
+    function formatPDFSummary(text) {
+      let formatted = text;
+      formatted = formatted.replace(/Main Idea:/gi, '<strong>🎯 Main Idea:</strong><br>')
+                         .replace(/Key Concepts:/gi, '<br><strong>📌 Key Concepts:</strong><br>')
+                         .replace(/Important Details:/gi, '<br><strong>⚠️ Important Details:</strong><br>')
+                         .replace(/Conclusion:/gi, '<br><strong>✅ Conclusion:</strong><br>');
+      return `<div class="pdf-summary">${formatted.replace(/\n/g, '<br>')}</div>`;
+    }
+
+    async function translateText(text, targetLang) {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/translate", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: text, target_language: targetLang })
+        });
+        const data = await res.json();
+        return data.translated;
+      } catch { return text; }
+    }
+
+    async function onGlobalLanguageChange() {
+      const lang = document.getElementById("globalLang").value;
+      
+      if (currentQuizData) {
+        if (currentQuizData.type === 'answer') {
+          const translated = await translateText(currentQuizData.content, lang);
+          document.getElementById("output").innerHTML = formatAnswer(translated, currentQuizData.level);
+        } else if (currentQuizData.type === 'quiz') {
+          // For quiz, rebuild
+        }
+      }
+      
+      if (currentPDFData) {
+        displayPDFContent(currentPDFData, lang);
+      }
+      
+      if (currentDiagramData) {
+        displayDiagram(currentDiagramData.topic, currentDiagramData.code, currentDiagramData.explanation, lang);
+      }
+    }
+
+    function showPage(page, btn, isLogoClick = false) {
+      ["home", "quiz", "pdf", "diagram"].forEach(p => document.getElementById(p).classList.add("hidden"));
+      document.getElementById(page).classList.remove("hidden");
+      if (!isLogoClick && btn) {
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      } else if (isLogoClick) {
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".nav-btn")[0]?.classList.add("active");
+      }
+    }
+
+    function resetProgress() {
+      const fill = document.getElementById("progress-fill");
+      if (fill) { fill.style.width = "33%"; fill.style.background = "#ef5350"; }
+      const levelText = document.getElementById("level-text");
+      if (levelText) levelText.innerText = "Level: BEGINNER";
+    }
+
+    function updateProgress(level) {
+      let progress = 33, color = "#ef5350", text = "BEGINNER";
+      if (level === 'intermediate') { progress = 66; color = "#ff9800"; text = "INTERMEDIATE"; }
+      else if (level === 'advanced') { progress = 100; color = "#4caf50"; text = "ADVANCED"; }
+      document.getElementById("progress-fill").style.width = progress + "%";
+      document.getElementById("progress-fill").style.background = color;
+      document.getElementById("level-text").innerText = "Level: " + text;
+    }
+
+    // QUIZ
+    async function askQuiz() {
+      const question = document.getElementById("quiz-question").value.trim();
+      const level = document.getElementById("quiz-level").value;
+      const goal = document.getElementById("quiz-goal").value;
+      const lang = document.getElementById("globalLang").value;
+      const output = document.getElementById("output");
+
+      if (!question) { output.innerHTML = "<div class='alert-red'>⚠️ Please enter a question</div>"; return; }
+      resetProgress();
+      output.innerHTML = `<div style="text-align:center; padding:35px;"><div class="loader"></div><p>⏳ Generating...</p></div>`;
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/ask", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question, level, goal, language: lang })
+        });
+        const data = await res.json();
+        
+        if (data.type === "quiz") {
+          currentQuizData = { type: 'quiz', questions: data.questions, level: data.level };
+          displayQuiz(data.questions, data.level);
+        } else if (data.type === "answer") {
+          currentQuizData = { type: 'answer', content: data.content, level: data.level };
+          output.innerHTML = formatAnswer(data.content, data.level);
+          if (data.level) updateProgress(data.level);
+        }
+      } catch (err) {
+        output.innerHTML = "<div class='alert-red'>❌ Error connecting to backend</div>";
+      }
+    }
+
+    function displayQuiz(questions, level) {
+      let html = `<h2 style="margin-bottom:15px;">📝 Quiz</h2>`;
+      if (level) html += `<div style="text-align:center; margin-bottom:15px;">${getLevelBadge(level)}</div>`;
+      window.currentQuiz = questions;
+      questions.forEach((q, i) => {
+        html += `<div class="quiz-question"><p><b>${i+1}. ${q.question}</b></p>`;
+        q.choices.forEach(choice => html += `<label class="choice"><input type="radio" name="q${i}" value="${choice}"> ${choice}</label>`);
+        html += `</div>`;
+      });
+      html += `<button onclick="submitQuiz()">✅ Submit Quiz</button>`;
+      document.getElementById("output").innerHTML = html;
+    }
+
+    async function submitQuiz() {
+      const answers = [];
+      window.currentQuiz.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) answers.push({ question: q.question, selected: selected.value });
+      });
+      if (answers.length === 0) { document.getElementById("output").innerHTML = "<div class='alert-red'>⚠️ Please select an answer</div>"; return; }
+      
+      try {
+        const res = await fetch("http://127.0.0.1:8000/evaluate", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ level: document.getElementById("quiz-level").value, answers })
+        });
+        const data = await res.json();
+        
+        updateProgress(data.level);
+        
+        let html = `<div class="result-box"><h2>📊 Performance</h2><p style="font-size:28px; font-weight:700;">${data.score}/${data.total}</p><p>${data.percentage}%</p><p>${data.feedback}</p></div>`;
+        window.currentQuiz.forEach((q, i) => {
+          html += `<div class="quiz-question"><p><b>${i+1}. ${q.question}</b></p>`;
+          const userAnswer = answers.find(a => a.question === q.question);
+          q.choices.forEach(choice => {
+            let cls = "choice";
+            if (choice === q.answer) cls += " correct";
+            if (userAnswer && choice === userAnswer.selected && choice !== q.answer) cls += " wrong";
+            html += `<div class="${cls}">${choice}</div>`;
+          });
+          html += userAnswer && userAnswer.selected === q.answer ? `<p style="color:green; margin-top:10px;">✔ Correct</p>` : `<p style="color:red; margin-top:10px;">❌ Correct answer: <strong>${q.answer}</strong></p>`;
+          html += `</div>`;
+        });
+        document.getElementById("output").innerHTML = html;
+      } catch (err) {
+        document.getElementById("output").innerHTML = "<div class='alert-red'>❌ Error evaluating quiz</div>";
+      }
+    }
+
+    // PDF
+    async function uploadPDF() {
+      const file = document.getElementById("pdfFile").files[0];
+      const output = document.getElementById("pdf-output");
+      if (!file) { output.innerHTML = "<div class='alert-red'>⚠️ Please choose a PDF file</div>"; return; }
+      output.innerHTML = `<div style="text-align:center;"><div class="loader"></div><p>⏳ Analyzing PDF...</p></div>`;
+      
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await fetch("http://127.0.0.1:8000/upload-pdf", { method: "POST", body: formData });
+        const data = await res.json();
+        currentPDFData = data;
+        displayPDFContent(data, document.getElementById("globalLang").value);
+      } catch { output.innerHTML = "<div class='alert-red'>❌ Error connecting to backend</div>"; }
+    }
+
+    async function displayPDFContent(data, lang) {
+      const output = document.getElementById("pdf-output");
+      let summary = data.summary;
+      if (lang !== 'en') summary = await translateText(summary, lang);
+      
+      let summaryHtml = formatPDFSummary(summary);
+      let quizHtml = `<h2 style="margin-top:25px;">📝 Quiz from PDF</h2>`;
+      data.quiz.forEach((q, i) => {
+        quizHtml += `<div class="quiz-question"><p><b>${i+1}. ${q.question}</b></p>`;
+        q.choices.forEach(choice => quizHtml += `<div class="choice" style="${choice === q.answer ? 'background:#c8e6c9; font-weight:bold;' : ''}">${choice}</div>`);
+        quizHtml += `</div>`;
+      });
+      output.innerHTML = summaryHtml + quizHtml;
+    }
+
+    // DIAGRAM
+    async function generateDiagram() {
+      const q = document.getElementById("diagram-question").value.trim();
+      const output = document.getElementById("diagram-output");
+      if (!q) { output.innerHTML = "<div class='alert-red'>⚠️ Enter a diagram topic</div>"; return; }
+      output.innerHTML = `<div style="text-align:center;"><div class="loader"></div><p>⏳ Generating diagram...</p></div>`;
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/generate-diagram", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: q, type: document.getElementById("diagramType").value })
+        });
+        const data = await res.json();
+        if (data.error || !data.diagram) throw new Error();
+        
+        let explanation = data.explanation || "";
+        if (!explanation || explanation.length < 60) {
+          const expRes = await fetch("http://127.0.0.1:8000/explain-diagram", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ diagram: data.diagram })
+          });
+          const expData = await expRes.json();
+          explanation = expData.explanation || "This diagram illustrates the complete workflow and architecture with all key components.";
+        }
+        
+        currentDiagramData = { topic: q, code: data.diagram, explanation: explanation };
+        displayDiagram(q, data.diagram, explanation, document.getElementById("globalLang").value);
+      } catch { output.innerHTML = "<div class='alert-red'>❌ Error generating diagram</div>"; }
+    }
+
+    async function displayDiagram(topic, diagramCode, explanation, lang) {
+      const output = document.getElementById("diagram-output");
+      const clean = diagramCode.replace(/```mermaid/g, "").replace(/```/g, "").trim();
+      const fixed = clean.replace(/\|\>/g, "|").replace(/--(?!>)/g, "-->");
+      
+      let translatedExp = explanation;
+      if (lang !== 'en') translatedExp = await translateText(explanation, lang);
+      
+      output.innerHTML = `
+        <div class="diagram-card">
+          <h3 style="margin-bottom:15px;">📊 ${topic}</h3>
+          <div class="diagram-body"><div class="mermaid">${fixed}</div></div>
+          <div class="diagram-explanation">📝 ${translatedExp}</div>
+          <div class="download-btn-container">
+            <button class="download-btn" onclick="downloadDiagram()">⬇ Download SVG</button>
+          </div>
+        </div>
+      `;
+      
+      setTimeout(() => {
+        try { mermaid.init(undefined, document.querySelectorAll(".mermaid")); } catch(e) { console.error(e); }
+        setTimeout(() => { const svg = document.querySelector(".mermaid svg"); if(svg) panzoom(svg, { maxZoom: 5, minZoom: 0.5 }); }, 400);
+      }, 300);
+    }
+
+    function downloadDiagram() {
+      const svg = document.querySelector(".mermaid svg");
+      if (!svg) { alert("Diagram not ready yet"); return; }
+      const source = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([source], { type: "image/svg+xml" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "diagram.svg";
+      a.click();
+      URL.revokeObjectURL(blob);
+    }
+  </script>
+</body>
+</html>
