@@ -399,7 +399,167 @@
       text-align: center;
       font-size: 14px;
     }
+        /* ===== DOMAIN SELECTOR ===== */
+    .domain-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 40, 0.85);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.4s ease;
+    }
+    
+    .domain-box {
+      background: white;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      animation: slideUp 0.4s ease;
+    }
+    
+    @keyframes slideUp {
+      from { opacity:0; transform: translateY(30px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    
+    .domain-box h2 {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    
+    .domain-box p {
+      font-size: 13px;
+      color: #6b7d95;
+      margin-bottom: 24px;
+    }
+    
+    .domain-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    .domain-option input[type="radio"] {
+      display: none;
+    }
+    
+    .domain-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 12px;
+      border: 2px solid #e0e8f5;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #f9fbff;
+    }
+    
+    .domain-option label:hover {
+      border-color: #4facfe;
+      background: #e8f4ff;
+    }
+    
+    .domain-option input[type="radio"]:checked + label {
+      border-color: #4facfe;
+      background: linear-gradient(135deg, #e8f4ff, #e0f7ff);
+      box-shadow: 0 4px 15px rgba(79,172,254,0.2);
+    }
+    
+    .domain-icon { font-size: 28px; }
+    
+    .domain-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e2d3d;
+    }
+    
+    .domain-sub {
+      font-size: 11px;
+      color: #6b7d95;
+    }
+    
+    .btn-confirm {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #4facfe, #00c6ff);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      box-shadow: 0 4px 15px rgba(79,172,254,0.3);
+    }
+    
+    .btn-confirm:hover { opacity: 0.9; }
+    .btn-confirm:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .domain-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e8f4ff;
+      border: 1px solid #b5d4f4;
+      color: #185FA5;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .domain-badge:hover { background: #d0eaff; }
 
+    .back-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      z-index: 100;
+      font-family: inherit;
+      width: auto;
+      margin: 0;
+      box-shadow: none;
+      background-image: none;
+    }
+    
+    .back-btn:hover {
+      background: rgba(79,172,254,0.25);
+      border-color: #4facfe;
+      opacity: 1;
+    }
+      
     @media (max-width: 750px) {
       .navbar { padding: 0 15px; }
       .nav-btn { padding: 5px 12px; font-size: 11px; }
@@ -426,7 +586,59 @@
 </head>
 
 <body>
+    <!-- DOMAIN SELECTOR OVERLAY -->
+<div class="domain-overlay" id="domainOverlay">
+  <div class="domain-box">
+    <div style="font-size:36px; margin-bottom:10px;">🎓</div>
+    <h2>Welcome to GenEdu</h2>
+    <p>Select your field of study or teaching domain to personalize your experience</p>
 
+    <div class="domain-options">
+
+      <div class="domain-option">
+        <input type="radio" name="domain" id="cs" value="Computer Science / IT">
+        <label for="cs">
+          <span class="domain-icon">💻</span>
+          <span class="domain-name">Computer Science / IT</span>
+          <span class="domain-sub">Software Engineering · Cybersecurity · Cloud Computing · DevOps</span>
+        </label>
+      </div>
+
+      <div class="domain-option">
+        <input type="radio" name="domain" id="math" value="Mathematics">
+        <label for="math">
+          <span class="domain-icon">📐</span>
+          <span class="domain-name">Mathematics & Statistics</span>
+          <span class="domain-sub">Discrete Math · Cryptography · Data Analysis · Probability</span>
+        </label>
+      </div>
+
+      <div class="domain-option">
+        <input type="radio" name="domain" id="science" value="Sciences">
+        <label for="science">
+          <span class="domain-icon">🔬</span>
+          <span class="domain-name">Applied Sciences</span>
+          <span class="domain-sub">Quantum Computing · Computational Bio · Robotics · Nanotechnology</span>
+        </label>
+      </div>
+
+      <div class="domain-option">
+        <input type="radio" name="domain" id="engineering" value="Engineering">
+        <label for="engineering">
+          <span class="domain-icon">⚙️</span>
+          <span class="domain-name">Systems Engineering</span>
+          <span class="domain-sub">Embedded Systems · Computer Architecture · IoT · Hardware Design</span>
+        </label>
+      </div>
+
+    </div>
+
+    <button class="btn-confirm" id="confirmDomain" onclick="confirmDomain()" disabled>
+      Continue →
+    </button>
+  </div>
+</div>
+    
   <div class="navbar">
     <div class="nav-container">
       <img src="genedu_logo.png" alt="GenEdu" class="logo" onclick="showPage('home', null, true)" />
@@ -458,7 +670,7 @@
         </div>
       </div>
     </div>
-
+      
     <div id="quiz" class="hidden">
       <div class="container">
         <div class="section-header">
@@ -544,8 +756,6 @@
   </div>
 
   <script>
-    const API_BASE = "https://genedu-backend.onrender.com";
-
     let currentQuizData = null;
     let currentPDFData = null;
     let currentDiagramData = null;
@@ -585,7 +795,7 @@
 
     async function translateText(text, targetLang) {
       try {
-        const res = await fetch(`${API_BASE}/translate`, {
+        const res = await fetch("http://127.0.0.1:8000/translate", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: text, target_language: targetLang })
         });
@@ -656,9 +866,15 @@
       output.innerHTML = `<div style="text-align:center; padding:35px;"><div class="loader"></div><p>⏳ Generating...</p></div>`;
 
       try {
-        const res = await fetch(`${API_BASE}/ask`, {
+        const res = await fetch("http://127.0.0.1:8000/ask", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question, level, goal, language: lang })
+          body: JSON.stringify({ 
+              question, 
+              level, 
+              goal, 
+              language: lang,
+              domain: window.userDomain || "Computer Science / IT"
+          })
         });
         const data = await res.json();
         
@@ -697,7 +913,7 @@
       if (answers.length === 0) { document.getElementById("output").innerHTML = "<div class='alert-red'>⚠️ Please select an answer</div>"; return; }
       
       try {
-        const res = await fetch(`${API_BASE}/evaluate`, {
+        const res = await fetch("http://127.0.0.1:8000/evaluate", {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ level: document.getElementById("quiz-level").value, answers })
         });
@@ -733,8 +949,9 @@
       
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("domain", window.userDomain || "Computer Science / IT");  
       try {
-        const res = await fetch(`${API_BASE}/upload-pdf`, { method: "POST", body: formData });
+        const res = await fetch("http://127.0.0.1:8000/upload-pdf", { method: "POST", body: formData });
         const data = await res.json();
         currentPDFData = data;
         displayPDFContent(data, document.getElementById("globalLang").value);
@@ -764,16 +981,19 @@
       output.innerHTML = `<div style="text-align:center;"><div class="loader"></div><p>⏳ Generating diagram...</p></div>`;
 
       try {
-        const res = await fetch(`${API_BASE}/generate-diagram`, {
+        const res = await fetch("http://127.0.0.1:8000/generate-diagram", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: q, type: document.getElementById("diagramType").value })
+          body: JSON.stringify({ 
+              prompt: q, 
+              type: document.getElementById("diagramType").value,
+              domain: window.userDomain || "Computer Science / IT"})
         });
         const data = await res.json();
         if (data.error || !data.diagram) throw new Error();
         
         let explanation = data.explanation || "";
         if (!explanation || explanation.length < 60) {
-          const expRes = await fetch(`${API_BASE}/explain-diagram`, {
+          const expRes = await fetch("http://127.0.0.1:8000/explain-diagram", {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ diagram: data.diagram })
           });
@@ -822,6 +1042,66 @@
       a.click();
       URL.revokeObjectURL(blob);
     }
+
+     // ===== DOMAIN SELECTOR =====
+
+// Active le bouton quand un domaine est sélectionné
+document.querySelectorAll('input[name="domain"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    document.getElementById('confirmDomain').disabled = false;
+  });
+});
+
+function confirmDomain() {
+  const selected = document.querySelector('input[name="domain"]:checked');
+  if (!selected) return;
+
+  window.userDomain = selected.value;
+
+  // Ferme l'overlay
+  const overlay = document.getElementById('domainOverlay');
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.3s ease';
+  setTimeout(() => overlay.style.display = 'none', 300);
+
+  // Affiche le bouton retour
+  document.getElementById('backBtn').style.display = 'flex';
+
+  // Update placeholders
+  updatePlaceholders(window.userDomain);
+}
+
+function getDomainIcon(domain) {
+  const icons = {
+    'Computer Science / IT': '💻',
+    'Mathematics': '📐',
+    'Sciences': '🔬',
+    'Engineering': '⚙️'
+  };
+  return icons[domain] || '🎓';
+}
+
+function updatePlaceholders(domain) {
+  const examples = {
+    'Computer Science / IT': 'e.g. What is a neural network?',
+    'Mathematics':           'e.g. What is a derivative?',
+    'Sciences':              'e.g. What is the Bohr model?',
+    'Engineering':           'e.g. What is Ohm\'s law?'
+  };
+  const qInput = document.getElementById('quiz-question');
+  const dInput = document.getElementById('diagram-question');
+  if (qInput) qInput.placeholder = examples[domain] || 'Ask anything...';
+  if (dInput) dInput.placeholder = `Diagram topic in ${domain}...`;
+} 
+function reopenDomains() {
+  const overlay = document.getElementById('domainOverlay');
+  overlay.style.display = 'flex';
+  overlay.style.opacity = '1';
+  document.getElementById('backBtn').style.display = 'none';
+}
   </script>
+<button class="back-btn" id="backBtn" style="display:none" onclick="reopenDomains()">
+  ← Change Domain
+</button>
 </body>
 </html>
