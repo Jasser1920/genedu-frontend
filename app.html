@@ -69,7 +69,6 @@
     .nav-buttons {
       display: flex;
       gap: 10px;
-        
     }
 
     .nav-btn {
@@ -84,7 +83,6 @@
       font-weight: 600;
       width: 120px;
       margin-bottom: 9px;
-
     }
 
     .nav-btn:hover {
@@ -125,7 +123,7 @@
 
     .hidden { display: none !important; }
 
-    /* HOME - Image background sur tout l'écran */
+    /* HOME */
     #home {
       height: calc(100vh - 52px);
       width: 100%;
@@ -147,14 +145,10 @@
     .hero-content h1 {
       font-size: 80px;
       color: white;
-       background: linear-gradient(to bottom, #ffffff 60%, #d1e9ff 100%);
+      background: linear-gradient(to bottom, #ffffff 60%, #d1e9ff 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(4px 4px 15px rgba(0, 0, 0, 0.3));
-       text-shadow:
-          1px 1px 2px white,
-          0 0 1em blue,
-          0 0 0.2em white;
     }
 
     .hero-content p {
@@ -169,10 +163,10 @@
       width: auto;
       padding: 12px 20px;
       margin-top: 15px;
-        border-radius: 10px;
+      border-radius: 10px;
     }
 
-    /* Autres sections */
+    /* Other sections */
     .container {
       max-width: 950px;
       margin: 0 auto;
@@ -399,7 +393,8 @@
       text-align: center;
       font-size: 14px;
     }
-        /* ===== DOMAIN SELECTOR ===== */
+
+    /* ===== DOMAIN SELECTOR ===== */
     .domain-overlay {
       position: fixed;
       inset: 0;
@@ -511,24 +506,6 @@
       cursor: not-allowed;
       box-shadow: none;
     }
-    
-    .domain-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #e8f4ff;
-      border: 1px solid #b5d4f4;
-      color: #185FA5;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-left: 10px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    
-    .domain-badge:hover { background: #d0eaff; }
 
     .back-btn {
       position: fixed;
@@ -586,58 +563,56 @@
 </head>
 
 <body>
-    <!-- DOMAIN SELECTOR OVERLAY -->
-<div class="domain-overlay" id="domainOverlay">
-  <div class="domain-box">
-    <div style="font-size:36px; margin-bottom:10px;">🎓</div>
-    <h2>Welcome to GenEdu</h2>
-    <p>Select your field of study or teaching domain to personalize your experience</p>
+  <!-- DOMAIN SELECTOR OVERLAY -->
+  <div class="domain-overlay" id="domainOverlay">
+    <div class="domain-box">
+      <div style="font-size:36px; margin-bottom:10px;">🎓</div>
+      <h2>Welcome to GenEdu</h2>
+      <p>Select your field of study or teaching domain to personalize your experience</p>
 
-    <div class="domain-options">
+      <div class="domain-options">
+        <div class="domain-option">
+          <input type="radio" name="domain" id="cs" value="Computer Science / IT">
+          <label for="cs">
+            <span class="domain-icon">💻</span>
+            <span class="domain-name">Computer Science / IT</span>
+            <span class="domain-sub">Software Engineering · Cybersecurity · Cloud Computing · DevOps</span>
+          </label>
+        </div>
 
-      <div class="domain-option">
-        <input type="radio" name="domain" id="cs" value="Computer Science / IT">
-        <label for="cs">
-          <span class="domain-icon">💻</span>
-          <span class="domain-name">Computer Science / IT</span>
-          <span class="domain-sub">Software Engineering · Cybersecurity · Cloud Computing · DevOps</span>
-        </label>
+        <div class="domain-option">
+          <input type="radio" name="domain" id="math" value="Mathematics">
+          <label for="math">
+            <span class="domain-icon">📐</span>
+            <span class="domain-name">Mathematics & Statistics</span>
+            <span class="domain-sub">Discrete Math · Cryptography · Data Analysis · Probability</span>
+          </label>
+        </div>
+
+        <div class="domain-option">
+          <input type="radio" name="domain" id="science" value="Sciences">
+          <label for="science">
+            <span class="domain-icon">🔬</span>
+            <span class="domain-name">Applied Sciences</span>
+            <span class="domain-sub">Quantum Computing · Computational Bio · Robotics · Nanotechnology</span>
+          </label>
+        </div>
+
+        <div class="domain-option">
+          <input type="radio" name="domain" id="engineering" value="Engineering">
+          <label for="engineering">
+            <span class="domain-icon">⚙️</span>
+            <span class="domain-name">Systems Engineering</span>
+            <span class="domain-sub">Embedded Systems · Computer Architecture · IoT · Hardware Design</span>
+          </label>
+        </div>
       </div>
 
-      <div class="domain-option">
-        <input type="radio" name="domain" id="math" value="Mathematics">
-        <label for="math">
-          <span class="domain-icon">📐</span>
-          <span class="domain-name">Mathematics & Statistics</span>
-          <span class="domain-sub">Discrete Math · Cryptography · Data Analysis · Probability</span>
-        </label>
-      </div>
-
-      <div class="domain-option">
-        <input type="radio" name="domain" id="science" value="Sciences">
-        <label for="science">
-          <span class="domain-icon">🔬</span>
-          <span class="domain-name">Applied Sciences</span>
-          <span class="domain-sub">Quantum Computing · Computational Bio · Robotics · Nanotechnology</span>
-        </label>
-      </div>
-
-      <div class="domain-option">
-        <input type="radio" name="domain" id="engineering" value="Engineering">
-        <label for="engineering">
-          <span class="domain-icon">⚙️</span>
-          <span class="domain-name">Systems Engineering</span>
-          <span class="domain-sub">Embedded Systems · Computer Architecture · IoT · Hardware Design</span>
-        </label>
-      </div>
-
+      <button class="btn-confirm" id="confirmDomain" onclick="confirmDomain()" disabled>
+        Continue →
+      </button>
     </div>
-
-    <button class="btn-confirm" id="confirmDomain" onclick="confirmDomain()" disabled>
-      Continue →
-    </button>
   </div>
-</div>
     
   <div class="navbar">
     <div class="nav-container">
@@ -755,17 +730,25 @@
     </div>
   </div>
 
+  <button class="back-btn" id="backBtn" style="display:none" onclick="reopenDomains()">
+    ← Change Domain
+  </button>
+
   <script>
+    /* ============================================================
+       SINGLE SOURCE OF TRUTH FOR THE BACKEND URL
+       Change only this line if your backend URL ever changes.
+    ============================================================ */
     const API_BASE = "https://genedu-backend.onrender.com";
+
     let currentQuizData = null;
     let currentPDFData = null;
     let currentDiagramData = null;
-    let currentQuizLevel = null;
 
     function getLevelBadge(level) {
-      if (level === 'beginner') return '<span class="level-badge level-beginner">📘 BEGINNER</span>';
+      if (level === 'beginner')     return '<span class="level-badge level-beginner">📘 BEGINNER</span>';
       if (level === 'intermediate') return '<span class="level-badge level-intermediate">📙 INTERMEDIATE</span>';
-      if (level === 'advanced') return '<span class="level-badge level-advanced">📕 ADVANCED</span>';
+      if (level === 'advanced')     return '<span class="level-badge level-advanced">📕 ADVANCED</span>';
       return '';
     }
 
@@ -774,34 +757,36 @@
       if (!text.includes('Definition:') && !text.includes('**Definition**')) {
         return `<div>${getLevelBadge(level)}</div><div class="answer-box">${text.replace(/\n/g, '<br>')}</div>`;
       }
-      formatted = formatted.replace(/Definition:/gi, '<br><strong>📖 Definition:</strong><br>')
-                         .replace(/\*\*Definition\*\*/gi, '<br><strong>📖 Definition:</strong><br>')
-                         .replace(/Explanation:/gi, '<br><strong>🔍 Explanation:</strong><br>')
-                         .replace(/\*\*Explanation\*\*/gi, '<br><strong>🔍 Explanation:</strong><br>')
-                         .replace(/Example:/gi, '<br><strong>💡 Example:</strong><br>')
-                         .replace(/\*\*Example\*\*/gi, '<br><strong>💡 Example:</strong><br>')
-                         .replace(/Question:/gi, '<br><strong>❓ Question:</strong><br>')
-                         .replace(/\*\*Question\*\*/gi, '<br><strong>❓ Question:</strong><br>');
+      formatted = formatted
+        .replace(/Definition:/gi,    '<br><strong>📖 Definition:</strong><br>')
+        .replace(/\*\*Definition\*\*/gi, '<br><strong>📖 Definition:</strong><br>')
+        .replace(/Explanation:/gi,   '<br><strong>🔍 Explanation:</strong><br>')
+        .replace(/\*\*Explanation\*\*/gi,'<br><strong>🔍 Explanation:</strong><br>')
+        .replace(/Example:/gi,       '<br><strong>💡 Example:</strong><br>')
+        .replace(/\*\*Example\*\*/gi,'<br><strong>💡 Example:</strong><br>')
+        .replace(/Question:/gi,      '<br><strong>❓ Question:</strong><br>')
+        .replace(/\*\*Question\*\*/gi,'<br><strong>❓ Question:</strong><br>');
       return `<div>${getLevelBadge(level)}</div><div class="answer-box">${formatted.replace(/\n/g, '<br>')}</div>`;
     }
 
     function formatPDFSummary(text) {
-      let formatted = text;
-      formatted = formatted.replace(/Main Idea:/gi, '<strong>🎯 Main Idea:</strong><br>')
-                         .replace(/Key Concepts:/gi, '<br><strong>📌 Key Concepts:</strong><br>')
-                         .replace(/Important Details:/gi, '<br><strong>⚠️ Important Details:</strong><br>')
-                         .replace(/Conclusion:/gi, '<br><strong>✅ Conclusion:</strong><br>');
+      let formatted = text
+        .replace(/Main Idea:/gi,         '<strong>🎯 Main Idea:</strong><br>')
+        .replace(/Key Concepts:/gi,      '<br><strong>📌 Key Concepts:</strong><br>')
+        .replace(/Important Details:/gi, '<br><strong>⚠️ Important Details:</strong><br>')
+        .replace(/Conclusion:/gi,        '<br><strong>✅ Conclusion:</strong><br>');
       return `<div class="pdf-summary">${formatted.replace(/\n/g, '<br>')}</div>`;
     }
 
     async function translateText(text, targetLang) {
       try {
-        const res = await fetch("http://127.0.0.1:8000/translate", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text: text, target_language: targetLang })
+        const res = await fetch(`${API_BASE}/translate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, target_language: targetLang })
         });
         const data = await res.json();
-        return data.translated;
+        return data.translated || text;
       } catch { return text; }
     }
 
@@ -812,18 +797,11 @@
         if (currentQuizData.type === 'answer') {
           const translated = await translateText(currentQuizData.content, lang);
           document.getElementById("output").innerHTML = formatAnswer(translated, currentQuizData.level);
-        } else if (currentQuizData.type === 'quiz') {
-          // For quiz, rebuild
         }
+        // quiz re-render can be added here if needed
       }
-      
-      if (currentPDFData) {
-        displayPDFContent(currentPDFData, lang);
-      }
-      
-      if (currentDiagramData) {
-        displayDiagram(currentDiagramData.topic, currentDiagramData.code, currentDiagramData.explanation, lang);
-      }
+      if (currentPDFData)     displayPDFContent(currentPDFData, lang);
+      if (currentDiagramData) displayDiagram(currentDiagramData.topic, currentDiagramData.code, currentDiagramData.explanation, lang);
     }
 
     function showPage(page, btn, isLogoClick = false) {
@@ -854,31 +832,32 @@
       document.getElementById("level-text").innerText = "Level: " + text;
     }
 
-    // QUIZ
+    /* ===== QUIZ ===== */
     async function askQuiz() {
       const question = document.getElementById("quiz-question").value.trim();
-      const level = document.getElementById("quiz-level").value;
-      const goal = document.getElementById("quiz-goal").value;
-      const lang = document.getElementById("globalLang").value;
-      const output = document.getElementById("output");
+      const level    = document.getElementById("quiz-level").value;
+      const goal     = document.getElementById("quiz-goal").value;
+      const lang     = document.getElementById("globalLang").value;
+      const output   = document.getElementById("output");
 
       if (!question) { output.innerHTML = "<div class='alert-red'>⚠️ Please enter a question</div>"; return; }
       resetProgress();
       output.innerHTML = `<div style="text-align:center; padding:35px;"><div class="loader"></div><p>⏳ Generating...</p></div>`;
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/ask", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-              question, 
-              level, 
-              goal, 
-              language: lang,
-              domain: window.userDomain || "Computer Science / IT"
+        const res = await fetch(`${API_BASE}/ask`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question,
+            level,
+            goal,
+            language: lang,
+            domain: window.userDomain || "Computer Science / IT"
           })
         });
         const data = await res.json();
-        
+
         if (data.type === "quiz") {
           currentQuizData = { type: 'quiz', questions: data.questions, level: data.level };
           displayQuiz(data.questions, data.level);
@@ -889,6 +868,7 @@
         }
       } catch (err) {
         output.innerHTML = "<div class='alert-red'>❌ Error connecting to backend</div>";
+        console.error(err);
       }
     }
 
@@ -911,17 +891,20 @@
         const selected = document.querySelector(`input[name="q${i}"]:checked`);
         if (selected) answers.push({ question: q.question, selected: selected.value });
       });
-      if (answers.length === 0) { document.getElementById("output").innerHTML = "<div class='alert-red'>⚠️ Please select an answer</div>"; return; }
+      if (answers.length === 0) {
+        document.getElementById("output").innerHTML = "<div class='alert-red'>⚠️ Please select an answer</div>";
+        return;
+      }
       
       try {
-        const res = await fetch("http://127.0.0.1:8000/evaluate", {
-          method: "POST", headers: { "Content-Type": "application/json" },
+        const res = await fetch(`${API_BASE}/evaluate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ level: document.getElementById("quiz-level").value, answers })
         });
         const data = await res.json();
-        
         updateProgress(data.level);
-        
+
         let html = `<div class="result-box"><h2>📊 Performance</h2><p style="font-size:28px; font-weight:700;">${data.score}/${data.total}</p><p>${data.percentage}%</p><p>${data.feedback}</p></div>`;
         window.currentQuiz.forEach((q, i) => {
           html += `<div class="quiz-question"><p><b>${i+1}. ${q.question}</b></p>`;
@@ -932,31 +915,38 @@
             if (userAnswer && choice === userAnswer.selected && choice !== q.answer) cls += " wrong";
             html += `<div class="${cls}">${choice}</div>`;
           });
-          html += userAnswer && userAnswer.selected === q.answer ? `<p style="color:green; margin-top:10px;">✔ Correct</p>` : `<p style="color:red; margin-top:10px;">❌ Correct answer: <strong>${q.answer}</strong></p>`;
+          html += userAnswer && userAnswer.selected === q.answer
+            ? `<p style="color:green; margin-top:10px;">✔ Correct</p>`
+            : `<p style="color:red; margin-top:10px;">❌ Correct answer: <strong>${q.answer}</strong></p>`;
           html += `</div>`;
         });
         document.getElementById("output").innerHTML = html;
       } catch (err) {
         document.getElementById("output").innerHTML = "<div class='alert-red'>❌ Error evaluating quiz</div>";
+        console.error(err);
       }
     }
 
-    // PDF
+    /* ===== PDF ===== */
     async function uploadPDF() {
-      const file = document.getElementById("pdfFile").files[0];
+      const file   = document.getElementById("pdfFile").files[0];
       const output = document.getElementById("pdf-output");
       if (!file) { output.innerHTML = "<div class='alert-red'>⚠️ Please choose a PDF file</div>"; return; }
       output.innerHTML = `<div style="text-align:center;"><div class="loader"></div><p>⏳ Analyzing PDF...</p></div>`;
       
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("domain", window.userDomain || "Computer Science / IT");  
+      formData.append("domain", window.userDomain || "Computer Science / IT");
+
       try {
-        const res = await fetch("http://127.0.0.1:8000/upload-pdf", { method: "POST", body: formData });
+        const res = await fetch(`${API_BASE}/upload-pdf`, { method: "POST", body: formData });
         const data = await res.json();
         currentPDFData = data;
         displayPDFContent(data, document.getElementById("globalLang").value);
-      } catch { output.innerHTML = "<div class='alert-red'>❌ Error connecting to backend</div>"; }
+      } catch (err) {
+        output.innerHTML = "<div class='alert-red'>❌ Error connecting to backend</div>";
+        console.error(err);
+      }
     }
 
     async function displayPDFContent(data, lang) {
@@ -974,47 +964,53 @@
       output.innerHTML = summaryHtml + quizHtml;
     }
 
-    // DIAGRAM
+    /* ===== DIAGRAM ===== */
     async function generateDiagram() {
-      const q = document.getElementById("diagram-question").value.trim();
+      const q      = document.getElementById("diagram-question").value.trim();
       const output = document.getElementById("diagram-output");
       if (!q) { output.innerHTML = "<div class='alert-red'>⚠️ Enter a diagram topic</div>"; return; }
       output.innerHTML = `<div style="text-align:center;"><div class="loader"></div><p>⏳ Generating diagram...</p></div>`;
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/generate-diagram", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ 
-              prompt: q, 
-              type: document.getElementById("diagramType").value,
-              domain: window.userDomain || "Computer Science / IT"})
+        const res = await fetch(`${API_BASE}/generate-diagram`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt: q,
+            type:   document.getElementById("diagramType").value,
+            domain: window.userDomain || "Computer Science / IT"
+          })
         });
         const data = await res.json();
-        if (data.error || !data.diagram) throw new Error();
-        
+        if (data.error || !data.diagram) throw new Error("No diagram returned");
+
         let explanation = data.explanation || "";
         if (!explanation || explanation.length < 60) {
-          const expRes = await fetch("http://127.0.0.1:8000/explain-diagram", {
-            method: "POST", headers: { "Content-Type": "application/json" },
+          const expRes = await fetch(`${API_BASE}/explain-diagram`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ diagram: data.diagram })
           });
           const expData = await expRes.json();
           explanation = expData.explanation || "This diagram illustrates the complete workflow and architecture with all key components.";
         }
-        
-        currentDiagramData = { topic: q, code: data.diagram, explanation: explanation };
+
+        currentDiagramData = { topic: q, code: data.diagram, explanation };
         displayDiagram(q, data.diagram, explanation, document.getElementById("globalLang").value);
-      } catch { output.innerHTML = "<div class='alert-red'>❌ Error generating diagram</div>"; }
+      } catch (err) {
+        output.innerHTML = "<div class='alert-red'>❌ Error generating diagram</div>";
+        console.error(err);
+      }
     }
 
     async function displayDiagram(topic, diagramCode, explanation, lang) {
       const output = document.getElementById("diagram-output");
-      const clean = diagramCode.replace(/```mermaid/g, "").replace(/```/g, "").trim();
-      const fixed = clean.replace(/\|\>/g, "|").replace(/--(?!>)/g, "-->");
-      
+      const clean  = diagramCode.replace(/```mermaid/g, "").replace(/```/g, "").trim();
+      const fixed  = clean.replace(/\|\>/g, "|").replace(/--(?!>)/g, "-->");
+
       let translatedExp = explanation;
       if (lang !== 'en') translatedExp = await translateText(explanation, lang);
-      
+
       output.innerHTML = `
         <div class="diagram-card">
           <h3 style="margin-bottom:15px;">📊 ${topic}</h3>
@@ -1025,10 +1021,13 @@
           </div>
         </div>
       `;
-      
+
       setTimeout(() => {
         try { mermaid.init(undefined, document.querySelectorAll(".mermaid")); } catch(e) { console.error(e); }
-        setTimeout(() => { const svg = document.querySelector(".mermaid svg"); if(svg) panzoom(svg, { maxZoom: 5, minZoom: 0.5 }); }, 400);
+        setTimeout(() => {
+          const svg = document.querySelector(".mermaid svg");
+          if (svg) panzoom(svg, { maxZoom: 5, minZoom: 0.5 });
+        }, 400);
       }, 300);
     }
 
@@ -1036,73 +1035,54 @@
       const svg = document.querySelector(".mermaid svg");
       if (!svg) { alert("Diagram not ready yet"); return; }
       const source = new XMLSerializer().serializeToString(svg);
-      const blob = new Blob([source], { type: "image/svg+xml" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "diagram.svg";
+      const blob   = new Blob([source], { type: "image/svg+xml" });
+      const a      = document.createElement("a");
+      a.href       = URL.createObjectURL(blob);
+      a.download   = "diagram.svg";
       a.click();
-      URL.revokeObjectURL(blob);
+      URL.revokeObjectURL(a.href);
     }
 
-     // ===== DOMAIN SELECTOR =====
+    /* ===== DOMAIN SELECTOR ===== */
+    document.querySelectorAll('input[name="domain"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.getElementById('confirmDomain').disabled = false;
+      });
+    });
 
-// Active le bouton quand un domaine est sélectionné
-document.querySelectorAll('input[name="domain"]').forEach(radio => {
-  radio.addEventListener('change', () => {
-    document.getElementById('confirmDomain').disabled = false;
-  });
-});
+    function confirmDomain() {
+      const selected = document.querySelector('input[name="domain"]:checked');
+      if (!selected) return;
+      window.userDomain = selected.value;
 
-function confirmDomain() {
-  const selected = document.querySelector('input[name="domain"]:checked');
-  if (!selected) return;
+      const overlay = document.getElementById('domainOverlay');
+      overlay.style.opacity    = '0';
+      overlay.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => overlay.style.display = 'none', 300);
 
-  window.userDomain = selected.value;
+      document.getElementById('backBtn').style.display = 'flex';
+      updatePlaceholders(window.userDomain);
+    }
 
-  // Ferme l'overlay
-  const overlay = document.getElementById('domainOverlay');
-  overlay.style.opacity = '0';
-  overlay.style.transition = 'opacity 0.3s ease';
-  setTimeout(() => overlay.style.display = 'none', 300);
+    function updatePlaceholders(domain) {
+      const examples = {
+        'Computer Science / IT': 'e.g. What is a neural network?',
+        'Mathematics':           'e.g. What is a derivative?',
+        'Sciences':              'e.g. What is the Bohr model?',
+        'Engineering':           "e.g. What is Ohm's law?"
+      };
+      const qInput = document.getElementById('quiz-question');
+      const dInput = document.getElementById('diagram-question');
+      if (qInput) qInput.placeholder = examples[domain] || 'Ask anything...';
+      if (dInput) dInput.placeholder = `Diagram topic in ${domain}...`;
+    }
 
-  // Affiche le bouton retour
-  document.getElementById('backBtn').style.display = 'flex';
-
-  // Update placeholders
-  updatePlaceholders(window.userDomain);
-}
-
-function getDomainIcon(domain) {
-  const icons = {
-    'Computer Science / IT': '💻',
-    'Mathematics': '📐',
-    'Sciences': '🔬',
-    'Engineering': '⚙️'
-  };
-  return icons[domain] || '🎓';
-}
-
-function updatePlaceholders(domain) {
-  const examples = {
-    'Computer Science / IT': 'e.g. What is a neural network?',
-    'Mathematics':           'e.g. What is a derivative?',
-    'Sciences':              'e.g. What is the Bohr model?',
-    'Engineering':           'e.g. What is Ohm\'s law?'
-  };
-  const qInput = document.getElementById('quiz-question');
-  const dInput = document.getElementById('diagram-question');
-  if (qInput) qInput.placeholder = examples[domain] || 'Ask anything...';
-  if (dInput) dInput.placeholder = `Diagram topic in ${domain}...`;
-} 
-function reopenDomains() {
-  const overlay = document.getElementById('domainOverlay');
-  overlay.style.display = 'flex';
-  overlay.style.opacity = '1';
-  document.getElementById('backBtn').style.display = 'none';
-}
+    function reopenDomains() {
+      const overlay = document.getElementById('domainOverlay');
+      overlay.style.display = 'flex';
+      overlay.style.opacity  = '1';
+      document.getElementById('backBtn').style.display = 'none';
+    }
   </script>
-<button class="back-btn" id="backBtn" style="display:none" onclick="reopenDomains()">
-  ← Change Domain
-</button>
 </body>
 </html>
